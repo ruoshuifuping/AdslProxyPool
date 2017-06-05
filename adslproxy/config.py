@@ -1,9 +1,9 @@
 # coding:utf-8
 # 拨号间隔
-ADSL_CYCLE = 100
+ADSL_CYCLE = 251
 
 # 拨号出错重试间隔
-ADSL_ERROR_CYCLE = 5
+ADSL_ERROR_CYCLE = 10
 
 # ADSL命令
 ADSL_BASH = 'adsl-stop;adsl-start'
