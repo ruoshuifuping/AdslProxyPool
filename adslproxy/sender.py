@@ -15,7 +15,7 @@ else:
 
 
 class Sender():
-    def __inti__(self):
+    def __init__(self):
         self.proxy = None
     
     def get_ip(self, ifname=ADSL_IFNAME):
@@ -34,6 +34,7 @@ class Sender():
                 'https': 'https://' + proxy
             }, timeout=TEST_TIMEOUT)
             if proxy != self.proxy:
+                print('new proxy',proxy)
                 if response.status_code == 200:
                     self.proxy = proxy
                     return True    
@@ -61,7 +62,7 @@ class Sender():
                 print('ADSL Successfully')
                 ip = self.get_ip()
                 if ip:
-                    print('Now IP', ip)
+                    print('New IP', ip)
                     print('Testing Proxy, Please Wait')
                     proxy = '{ip}:{port}'.format(ip=ip, port=PROXY_PORT)
                     if self.test_proxy(proxy):
