@@ -15,14 +15,17 @@ else:
 
 
 class Sender():
+    def __inti__(self):
+        self.proxy = None
+    
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
         if status == 0:
             pattern = re.compile(ifname + '.*?inet.*?(\d+\.\d+\.\d+\.\d+).*?netmask', re.S)
             result = re.search(pattern, output)
             if result:
-                ip = result.group(1)
-                return ip
+                ip = result.group(1)                    
+                return ip                    
 
     def test_proxy(self, proxy):
         try:
@@ -30,8 +33,12 @@ class Sender():
                 'http': 'http://' + proxy,
                 'https': 'https://' + proxy
             }, timeout=TEST_TIMEOUT)
-            if response.status_code == 200:
-                return True
+            if proxy != self.proxy:
+                if response.status_code == 200:
+                    self.proxy = proxy
+                    return True    
+            elif proxy == self.proxy:
+                return False
         except (ConnectionError, ReadTimeout):
             return False
 
