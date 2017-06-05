@@ -17,6 +17,7 @@ else:
 class Sender():
     def __init__(self):
         self.proxy = None
+        self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3100.0 Safari/537.36'}
     
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
@@ -32,7 +33,7 @@ class Sender():
             response = requests.get(TEST_URL, proxies={
                 'http': 'http://' + proxy,
                 'https': 'https://' + proxy
-            }, timeout=TEST_TIMEOUT)
+            }, timeout=TEST_TIMEOUT,headers=self.headers)
             if proxy != self.proxy:
                 print('new proxy',proxy)
                 if response.status_code == 200:
