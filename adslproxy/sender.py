@@ -18,7 +18,8 @@ class Sender():
     def __init__(self):
         self.proxy = None
         self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3100.0 Safari/537.36'}
-    
+        self.timestamp = None
+        
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
         if status == 0:
@@ -56,6 +57,7 @@ class Sender():
 
     def adsl(self):
         while True:
+            self.timestamp = int(time.time())
             print('ADSL Start, Remove Proxy, Please wait')
             self.remove_proxy()
             (status, output) = subprocess.getstatusoutput(ADSL_BASH)
@@ -71,6 +73,8 @@ class Sender():
                         self.set_proxy(proxy)
                         print('Sleeping')
                         time.sleep(ADSL_CYCLE)
+                        self.remove_proxy()
+                        time.sleep(10)
                     else:
                         print('Invalid Proxy')
                 else:
