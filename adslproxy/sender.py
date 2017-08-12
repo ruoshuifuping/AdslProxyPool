@@ -36,7 +36,6 @@ class Sender():
                         'http': 'http://' + proxy
                     }, timeout=TEST_TIMEOUT)
                     if response.status_code == 200:
-                        return True
                         print('new proxy',proxy)
                         self.proxy = proxy
                         return True
