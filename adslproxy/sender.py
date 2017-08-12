@@ -30,18 +30,13 @@ class Sender():
 
     def test_proxy(self, proxy):
         try:
-            response = requests.get(TEST_URL, proxies={
-                'http': 'http://' + proxy,
-                'https': 'https://' + proxy
-            }, timeout=TEST_TIMEOUT,headers=self.headers)
             if proxy != self.proxy:
                 print('new proxy',proxy)
-                if response.status_code == 200:
-                    self.proxy = proxy
-                    return True    
+                self.proxy = proxy
+                return True    
             elif proxy == self.proxy:
                 return False
-        except (ConnectionError, ReadTimeout):
+        except:
             return False
 
     def remove_proxy(self):
