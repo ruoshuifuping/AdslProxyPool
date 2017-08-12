@@ -31,9 +31,20 @@ class Sender():
     def test_proxy(self, proxy):
         try:
             if proxy != self.proxy:
-                print('new proxy',proxy)
-                self.proxy = proxy
-                return True    
+                try:
+                    response = requests.get(TEST_URL, proxies={
+                        'http': 'http://' + proxy,
+                        'https': 'https://' + proxy
+                    }, timeout=TEST_TIMEOUT)
+                    if response.status_code == 200:
+                        return True
+                        print('new proxy',proxy)
+                        self.proxy = proxy
+                        return True
+                    else
+                        return False
+                except (ConnectionError, ReadTimeout):
+                    return False
             elif proxy == self.proxy:
                 return False
         except:
