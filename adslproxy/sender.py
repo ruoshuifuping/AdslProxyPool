@@ -41,7 +41,7 @@ class Sender():
                         print('new proxy',proxy)
                         self.proxy = proxy
                         return True
-                    else
+                    else:
                         return False
                 except (ConnectionError, ReadTimeout):
                     return False
