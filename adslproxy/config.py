@@ -30,10 +30,10 @@ REDIS_PORT = 6379
 PROXY_KEY = 'adsl'
 
 # 测试URL
-TEST_URL = 'https://www.amazon.com/'
+TEST_URL = 'https://www.baidu.com/'
 
 # 测试超时时间
-TEST_TIMEOUT = 20
+TEST_TIMEOUT = 10
 
 # API端口
 API_PORT = 8000
