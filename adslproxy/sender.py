@@ -33,8 +33,7 @@ class Sender():
             if proxy != self.proxy:
                 try:
                     response = requests.get(TEST_URL, proxies={
-                        'http': 'http://' + proxy,
-                        'https': 'https://' + proxy
+                        'http': 'http://' + proxy
                     }, timeout=TEST_TIMEOUT)
                     if response.status_code == 200:
                         return True
