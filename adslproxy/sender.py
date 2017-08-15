@@ -1,6 +1,6 @@
 import re
 import time
-import requests
+import requests as rq
 from requests.exceptions import ConnectionError, ReadTimeout
 from adslproxy.db import RedisClient
 from adslproxy.config import *
@@ -31,21 +31,15 @@ class Sender():
     def test_proxy(self, proxy):
         try:
             if proxy != self.proxy:
-                try:
-                    response = requests.get(TEST_URL, proxies={
-                        'http': 'http://' + proxy
-                    }, timeout=TEST_TIMEOUT)
-                    if response.status_code == 200:
-                        print('new proxy',proxy)
-                        self.proxy = proxy
-                        return True
-                    else:
-                        self.proxy = proxy
-                        return False
-                except (ConnectionError, ReadTimeout):
+                html = rq.get(TEST_URL,proxies=proxy,timeout = TEST_TIMEOUT)
+                if html.status_code == 200:
+                    self.proxy = proxy
+                    return True
+                else:
                     self.proxy = proxy
                     return False
-            elif proxy == self.proxy:
+            else:
+                self.proxy = proxy
                 return False
         except:
             return False
@@ -62,19 +56,18 @@ class Sender():
 
     def adsl(self):
         while True:
-            print('ADSL Start, Remove Proxy, Please wait')           
+            print('ADSL Start, Please wait')           
             (status, output) = subprocess.getstatusoutput(ADSL_BASH)
             if status == 0:
                 print('ADSL Successfully')
                 ip = self.get_ip()
                 if ip:
-                    print('New IP', ip)
-                    print('Testing Proxy, Please Wait')
-                    proxy = '{ip}:{port}'.format(ip=ip, port=PROXY_PORT)
+                    proxy = {'http':'http://' + '{ip}:{port}'.format(ip=ip, port=PROXY_PORT)}
+                    print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
                         self.set_proxy(proxy)
-                        print('Sleeping',ADSL_CYCLE + 10)
+                        print('Sleeping',ADSL_CYCLE + 15)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
                         time.sleep(15)
