@@ -42,6 +42,7 @@ class Sender():
                     else:
                         return False
                 except (ConnectionError, ReadTimeout):
+                    self.proxy = proxy
                     return False
             elif proxy == self.proxy:
                 return False
