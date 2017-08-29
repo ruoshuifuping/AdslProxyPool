@@ -31,6 +31,7 @@ class Sender():
     def test_proxy(self, proxy):
         try:
             if proxy != self.proxy:
+                print('start texting')
                 html = rq.get('https://www.baidu.com/',proxies=proxy,timeout = 10)
                 if html.status_code == 200:
                     print(html.status_code)
