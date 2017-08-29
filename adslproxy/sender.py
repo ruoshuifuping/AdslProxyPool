@@ -33,6 +33,7 @@ class Sender():
             if proxy != self.proxy:
                 html = rq.get('https://www.baidu.com/',proxies=proxy,timeout = 10)
                 if html.status_code == 200:
+                    print(html.status_code)
                     self.proxy = proxy
                     return True
                 else:
