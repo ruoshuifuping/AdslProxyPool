@@ -45,7 +45,7 @@ class Sender():
                     print(html.status_code)
                     if self.get_yanzhengma(html.text):
                         print("OK")
-                        self.proxy = '{}\t{}'.format(proxy,headers)
+                        self.proxy = '{}\t{}'.format(proxy,headers['User-Agent'])
                         return True
                 else:
                     self.proxy = proxy
