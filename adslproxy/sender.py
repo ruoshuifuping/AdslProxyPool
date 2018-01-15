@@ -38,6 +38,7 @@ class Sender():
             if proxy != self.proxy:
                 print('start texting')
                 headers = choice(self.headers)
+                proxy = {'http':'http://'+proxy}
                 html = rq.get(TEST_URL,proxies=proxy,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if get_yanzhengma(self,html.text):
