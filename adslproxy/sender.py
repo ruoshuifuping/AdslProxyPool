@@ -39,14 +39,10 @@ class Sender():
                 print('start texting')
                 headers = choice(self.headers)
                 proxies = {'http':'http://'+proxy}
-                print(proxies)
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
-                    print(html.status_code)
                     if self.get_yanzhengma(html.text):
-                        print("OK")
                         self.proxy = '{}\t{}'.format(proxy,headers['User-Agent'])
-                        print(self.proxy)
                         return True
                 else:
                     self.proxy = proxy
