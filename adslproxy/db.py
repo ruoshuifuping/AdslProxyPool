@@ -15,7 +15,11 @@ class RedisClient(object):
         return self.db.set(self.key(name), proxy)
 
     def get(self, name):
-        return self.db.get(self.key(name)).decode('utf-8')
+        result = self.db.get(self.key(name))
+        if result:
+            return result.decode('utf-8')
+        else:
+            return None
 
     def count(self):
         return len(self.db.keys(self.key('*')))
