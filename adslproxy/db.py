@@ -33,11 +33,18 @@ class RedisClient(object):
     def all(self):
         keys = self.keys()
         proxies = [{'name': key, 'proxy': self.get(key)} for key in keys]
-        return proxies
+        if proxies:
+            return proxies
+        else:
+            return None
 
     def random(self):
         items = self.all()
-        return random.choice(items).get('proxy')
+        proxy = random.choice(items).get('proxy')
+        if proxy:
+            return proxy
+        else:
+            return None
 
     def list(self):
         keys = self.keys()
