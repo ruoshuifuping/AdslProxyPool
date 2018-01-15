@@ -39,9 +39,9 @@ class RedisClient(object):
             return None
 
     def random(self):
-        items = self.all()
-        proxy = random.choice(items).get('proxy')
-        if proxy:
+        items = self.all()        
+        if items:
+            proxy = random.choice(items).get('proxy')
             return proxy
         else:
             return None
