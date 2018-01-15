@@ -41,7 +41,7 @@ class Sender():
                 html = rq.get(TEST_URL,proxies=proxy,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if get_yanzhengma(self,html.text):
-                        self.proxy = proxy
+                        self.proxy = '{}\t{}'.format(proxy,headers)
                         return True
                 else:
                     self.proxy = proxy
