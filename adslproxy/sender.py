@@ -78,7 +78,7 @@ class Sender():
                 print('ADSL Successfully')
                 ip = self.get_ip()
                 if ip:
-                    proxy = {'{ip}:{port}'.format(ip=ip, port=PROXY_PORT)}
+                    proxy = '{ip}:{port}'.format(ip=ip, port=PROXY_PORT)
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
