@@ -91,7 +91,7 @@ class Sender():
                         print('Sleeping',ADSL_CYCLE + 5)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
-                        teime.sleep(5)
+                        time.sleep(5)
                     else:
                         print('Invalid Proxy')
                 else:
