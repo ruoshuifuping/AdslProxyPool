@@ -18,6 +18,7 @@ else:
 class Sender():
     def __init__(self):
         self.proxy = None
+        self.proxies = None
         self.headers = [
             {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'},
             {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36'},
@@ -41,8 +42,11 @@ class Sender():
                 proxies = {'http':'http://'+proxy}
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
+                    print(html.status_code)
                     if self.get_yanzhengma(html.text):
-                        self.proxy = '{}\t{}'.format(proxy,headers['User-Agent'])
+                        self.proxies = '{}\t{}'.format(proxy,headers['User-Agent'])
+                        print(self.proxies)
+                        self.proxy = proxy
                         return True
                 else:
                     self.proxy = proxy
@@ -82,11 +86,10 @@ class Sender():
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
-                        self.set_proxy(self.proxy)
-                        print('Sleeping',ADSL_CYCLE + 15)
+                        self.set_proxy(self.proxies)
+                        print('Sleeping',ADSL_CYCLE)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
-                        time.sleep(15)
                     else:
                         print('Invalid Proxy')
                 else:
