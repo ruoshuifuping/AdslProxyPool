@@ -40,7 +40,8 @@ class Sender():
         try:
             if proxy != self.proxy:
                 print('start texting')
-                headers = choice(self.headers)
+                n = int((time.localtime(time.time())[3])/4.8)
+                headers = self.headers[n]
                 proxies = {'http':'http://'+proxy}
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
