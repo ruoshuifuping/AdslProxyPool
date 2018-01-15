@@ -5,6 +5,7 @@ from requests.exceptions import ConnectionError, ReadTimeout
 from adslproxy.db import RedisClient
 from adslproxy.config import *
 import platform
+from random import choice
 
 if platform.python_version().startswith('2.'):
     import commands as subprocess
@@ -17,7 +18,10 @@ else:
 class Sender():
     def __init__(self):
         self.proxy = None
-        self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3100.0 Safari/537.36'}
+        self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+                       'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+                       'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+                       'User-Agent':'Mozilla/5.0 (Windows NT 6.1; W…) Gecko/20100101 Firefox/56.0'}
         
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
@@ -32,11 +36,12 @@ class Sender():
         try:
             if proxy != self.proxy:
                 print('start texting')
-                html = rq.get('https://www.baidu.com/',proxies=proxy,timeout = 10)
+                headers = choice(self.headers)
+                html = rq.get(TEST_URL,proxies=proxy,headers=headers,timeout = 20)
                 if html.status_code == 200:
-                    print(html.status_code)
-                    self.proxy = proxy
-                    return True
+                    if get_yanzhengma(self,html.text):
+                        self.proxy = proxy
+                        return True
                 else:
                     self.proxy = proxy
                     return False
@@ -55,6 +60,13 @@ class Sender():
         self.redis = RedisClient()
         if self.redis.set(CLIENT_NAME, proxy):
             print('Successfully Set Proxy', proxy)
+    
+    def get_yanzhengma(self,html):
+        n = re.findall('Robot Check',html)
+        if not n:
+            return True
+        else:
+            return False
 
     def adsl(self):
         while True:
@@ -64,7 +76,7 @@ class Sender():
                 print('ADSL Successfully')
                 ip = self.get_ip()
                 if ip:
-                    proxy = {'http':'http://' + '{ip}:{port}'.format(ip=ip, port=PROXY_PORT)}
+                    proxy = {'{ip}:{port}'.format(ip=ip, port=PROXY_PORT)}
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
