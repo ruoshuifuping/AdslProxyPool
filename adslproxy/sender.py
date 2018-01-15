@@ -46,6 +46,7 @@ class Sender():
                     if self.get_yanzhengma(html.text):
                         print("OK")
                         self.proxy = '{}\t{}'.format(proxy,headers['User-Agent'])
+                        print(self.proxy)
                         return True
                 else:
                     self.proxy = proxy
@@ -85,7 +86,7 @@ class Sender():
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
-                        self.set_proxy(proxy)
+                        self.set_proxy(self.proxy)
                         print('Sleeping',ADSL_CYCLE + 15)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
