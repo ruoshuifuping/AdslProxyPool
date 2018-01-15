@@ -41,7 +41,16 @@ class MainHandler(RequestHandler):
 
         if api == 'count':
             self.write(str(self.redis.count()))
-
+            
+        if api == 'adsl1':
+            result = self.redis.get('adsl1')
+            if result:
+                self.write(result)
+                
+        if api == 'adsl2':
+            result = self.redis.get('adsl2')
+            if result:
+                self.write(result)
 
 def server(redis, port=API_PORT, address=''):
     application = Application([
