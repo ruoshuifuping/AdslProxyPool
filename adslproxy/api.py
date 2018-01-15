@@ -22,30 +22,22 @@ class MainHandler(RequestHandler):
             result = self.redis.first()
             if result:
                 self.write(result)
-            else:
-                self.write("nothing")
 
         if api == 'random':
             result = self.redis.random()
             if result:
                 self.write(result)
-            else:
-                self.write("nothing")
 
         if api == 'list':
             result = self.redis.list()
             if result:
                 for proxy in result:
                     self.write(proxy + '<br>')
-            else:
-                self.write("nothing")
 
         if api == 'all':
             result = self.redis.all()
             if result:
                 self.write(json.dumps(result))
-            else:
-                self.write("nothing")
 
         if api == 'count':
             self.write(str(self.redis.count()))
@@ -54,15 +46,11 @@ class MainHandler(RequestHandler):
             result = self.redis.get('adsl1')
             if result:
                 self.write(result)
-            else:
-                self.write("nothing")
                 
         if api == 'adsl2':
             result = self.redis.get('adsl2')
             if result:
                 self.write(result)
-            else:
-                self.write("nothing")
 
 def server(redis, port=API_PORT, address=''):
     application = Application([
