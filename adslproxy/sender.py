@@ -6,7 +6,6 @@ from adslproxy.db import RedisClient
 from adslproxy.config import *
 import platform
 from random import choice
-from bs4 import BeautifulSoup as bs
 
 if platform.python_version().startswith('2.'):
     import commands as subprocess
@@ -47,7 +46,6 @@ class Sender():
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if self.get_yanzhengma(html.text):
-                        print(html.text)
                         self.proxies = '{}\t{}'.format(proxy,headers['User-Agent'])
                         self.proxy = proxy
                         return True
