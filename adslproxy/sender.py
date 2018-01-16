@@ -49,6 +49,8 @@ class Sender():
                         self.proxies = '{}\t{}'.format(proxy,headers['User-Agent'])
                         self.proxy = proxy
                         return True
+                    else:
+                        return False
                 else:
                     self.proxy = proxy
                     return False
