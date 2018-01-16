@@ -56,7 +56,6 @@ class Sender():
                     self.proxy = proxy
                     return False
             else:
-                self.proxy = proxy
                 return False
         except:
             return False
