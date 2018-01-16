@@ -33,6 +33,7 @@ class Sender():
             if proxy != self.proxy:
                 print('start texting')
                 proxies = {'http':'http://'+proxy}
+                headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'}
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if self.get_yanzhengma(html.text):
