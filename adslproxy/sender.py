@@ -46,6 +46,7 @@ class Sender():
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if self.get_yanzhengma(html.text):
+                        print(html.text)
                         self.proxies = '{}\t{}'.format(proxy,headers['User-Agent'])
                         self.proxy = proxy
                         return True
