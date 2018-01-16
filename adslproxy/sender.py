@@ -18,14 +18,6 @@ else:
 class Sender():
     def __init__(self):
         self.proxy = None
-        self.proxies = None
-        self.headers = [
-            {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'},
-            {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36'},
-            {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'},
-            {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'},
-            {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'}
-        ]
         
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
@@ -40,13 +32,10 @@ class Sender():
         try:
             if proxy != self.proxy:
                 print('start texting')
-                n = int((time.localtime(time.time())[3])/4.8)
-                headers = self.headers[n]
                 proxies = {'http':'http://'+proxy}
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if self.get_yanzhengma(html.text):
-                        self.proxies = '{}\t{}'.format(proxy,headers['User-Agent'])
                         self.proxy = proxy
                         return True
                     else:
