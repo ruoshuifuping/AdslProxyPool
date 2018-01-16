@@ -6,6 +6,7 @@ from adslproxy.db import RedisClient
 from adslproxy.config import *
 import platform
 from random import choice
+from bs4 import BeautifulSoup as bs
 
 if platform.python_version().startswith('2.'):
     import commands as subprocess
