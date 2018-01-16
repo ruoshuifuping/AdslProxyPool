@@ -89,7 +89,7 @@ class Sender():
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
-                        self.set_proxy(self.proxies)
+                        self.set_proxy(self.proxy)
                         print('Sleeping',ADSL_CYCLE + 5)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
