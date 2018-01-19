@@ -52,9 +52,6 @@ class Sender():
                         self.proxy.remove(self.proxy[0])
                     return False
             else:
-                self.proxy.append(proxy)
-                if len(self.proxy) > 25:
-                    self.proxy.remove(self.proxy[0])
                 return False
         except:
             return False
