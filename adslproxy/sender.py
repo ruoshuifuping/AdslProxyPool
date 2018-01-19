@@ -17,7 +17,7 @@ else:
 
 class Sender():
     def __init__(self):
-        self.proxy = None
+        self.proxy = []
         
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
@@ -37,13 +37,19 @@ class Sender():
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if self.get_yanzhengma(html.text):
-                        self.proxy = proxy
+                        self.proxy.append(proxy)
+                        if len(self.proxy) > 25:
+                            self.proxy.remove(self.proxy[0])
                         return True
                     else:
-                        self.proxy = proxy
+                        self.proxy.append(proxy)
+                        if len(self.proxy) > 25:
+                            self.proxy.remove(self.proxy[0])
                         return False
                 else:
-                    self.proxy = proxy
+                    self.proxy.append(proxy)
+                    if len(self.proxy) > 25:
+                        self.proxy.remove(self.proxy[0])
                     return False
             else:
                 return False
@@ -79,7 +85,7 @@ class Sender():
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
-                        self.set_proxy(self.proxy)
+                        self.set_proxy(proxy)
                         print('Sleeping',ADSL_CYCLE + 5)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
