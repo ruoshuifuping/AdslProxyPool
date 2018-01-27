@@ -18,6 +18,14 @@ else:
 class Sender():
     def __init__(self):
         self.proxy = []
+        self.proxies = None
+        self.headers = [
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
+        ]
         
     def get_ip(self, ifname=ADSL_IFNAME):
         (status, output) = subprocess.getstatusoutput('ifconfig')
@@ -33,11 +41,13 @@ class Sender():
             if proxy not in self.proxy:
                 print('start texting')
                 proxies = {'http':'http://'+proxy}
-                headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'}
+                m = choice(self.headers)
+                headers = {'User-Agent':m}
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
                     if self.get_yanzhengma(html.text):
                         self.proxy.append(proxy)
+                        self.proxies = proxy + "\t" + m
                         if len(self.proxy) > 25:
                             self.proxy.remove(self.proxy[0])
                         return True
@@ -85,11 +95,10 @@ class Sender():
                     print("new proxy ",proxy)
                     if self.test_proxy(proxy):
                         print('Valid Proxy')
-                        self.set_proxy(proxy)
-                        print('Sleeping',ADSL_CYCLE + 5)
+                        self.set_proxy(self.proxies)
+                        print('Sleeping',ADSL_CYCLE)
                         time.sleep(ADSL_CYCLE)
                         self.remove_proxy()
-                        time.sleep(5)
                     else:
                         print('Invalid Proxy')
                 else:
