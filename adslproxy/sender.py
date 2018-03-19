@@ -22,9 +22,7 @@ class Sender():
         self.headers = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
             'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
         ]
         
     def get_ip(self, ifname=ADSL_IFNAME):
@@ -48,17 +46,17 @@ class Sender():
                     if self.get_yanzhengma(html.text):
                         self.proxy.append(proxy)
                         self.proxies = proxy + "\t" + m
-                        if len(self.proxy) > 25:
+                        if len(self.proxy) > 30:
                             self.proxy.remove(self.proxy[0])
                         return True
                     else:
                         self.proxy.append(proxy)
-                        if len(self.proxy) > 25:
+                        if len(self.proxy) > 30:
                             self.proxy.remove(self.proxy[0])
                         return False
                 else:
                     self.proxy.append(proxy)
-                    if len(self.proxy) > 25:
+                    if len(self.proxy) > 30:
                         self.proxy.remove(self.proxy[0])
                     return False
             else:
