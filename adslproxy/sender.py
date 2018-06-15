@@ -43,6 +43,7 @@ class Sender():
                 headers = {'User-Agent':m}
                 html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
                 if html.status_code == 200:
+                    print(200)
                     if self.get_yanzhengma(html.text):
                         self.proxy.append(proxy)
                         self.proxies = proxy + "\t" + m
@@ -51,15 +52,18 @@ class Sender():
                         return True
                     else:
                         self.proxy.append(proxy)
+                        print("被反扒")
                         if len(self.proxy) > 30:
                             self.proxy.remove(self.proxy[0])
                         return False
                 else:
                     self.proxy.append(proxy)
+                    print("连接状态不是200")
                     if len(self.proxy) > 30:
                         self.proxy.remove(self.proxy[0])
                     return False
             else:
+                print("和之前IP重复")
                 return False
         except:
             return False
@@ -77,6 +81,7 @@ class Sender():
     def get_yanzhengma(self,html):
         n = re.findall('Robot Check',html)
         if not n:
+            print("没有反扒")
             return True
         else:
             return False
