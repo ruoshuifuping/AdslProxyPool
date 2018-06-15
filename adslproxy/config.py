@@ -18,10 +18,10 @@ CLIENT_NAME = 'adsl1'
 ADSL_IFNAME = 'ppp0'
 
 # Redis数据库IP
-REDIS_HOST = 'localhost'
+REDIS_HOST = '39.105.26.123'
 
 # Redis数据库密码, 如无则填None
-REDIS_PASSWORD = None
+REDIS_PASSWORD = 'QKhQLSCKJGEFXgQXgfDULJjGGj_VLDNRpPMKpp_HZRhUA'
 
 # Redis数据库端口
 REDIS_PORT = 6379
@@ -36,4 +36,4 @@ TEST_URL = 'https://www.amazon.com/'
 TEST_TIMEOUT = 10
 
 # API端口
-API_PORT = 8000
+API_PORT = 7999
