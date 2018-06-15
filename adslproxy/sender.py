@@ -38,24 +38,15 @@ class Sender():
         try:
             if proxy not in self.proxy:
                 print('start texting')
-                proxies = {'http':'http://'+proxy}
                 m = choice(self.headers)
                 headers = {'User-Agent':m}
-                html = rq.get(TEST_URL,proxies=proxies,headers=headers,timeout = 20)
+                html = rq.get('https://www.baidu.com/',headers=headers,timeout = 5)
                 if html.status_code == 200:
-                    print(200)
-                    if self.get_yanzhengma(html.text):
-                        self.proxy.append(proxy)
-                        self.proxies = proxy + "\t" + m
-                        if len(self.proxy) > 30:
-                            self.proxy.remove(self.proxy[0])
-                        return True
-                    else:
-                        self.proxy.append(proxy)
-                        print("被反扒")
-                        if len(self.proxy) > 30:
-                            self.proxy.remove(self.proxy[0])
-                        return False
+                    self.proxy.append(proxy)
+                    self.proxies = proxy + "\t" + m
+                    if len(self.proxy) > 30:
+                        self.proxy.remove(self.proxy[0])
+                    return True
                 else:
                     self.proxy.append(proxy)
                     print("连接状态不是200")
@@ -77,15 +68,6 @@ class Sender():
         self.redis = RedisClient()
         if self.redis.set(CLIENT_NAME, proxy):
             print('Successfully Set Proxy', proxy)
-    
-    def get_yanzhengma(self,html):
-        n = re.findall('Robot Check',html)
-        if not n:
-            print("没有反扒")
-            return True
-        else:
-            print(n)
-            return False
 
     def adsl(self):
         while True:
