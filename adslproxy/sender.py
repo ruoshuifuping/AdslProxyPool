@@ -53,7 +53,6 @@ class Sender():
                     else:
                         self.proxy.append(proxy)
                         print("被反扒")
-                        time.sleep(2)
                         if len(self.proxy) > 30:
                             self.proxy.remove(self.proxy[0])
                         return False
@@ -106,6 +105,7 @@ class Sender():
                         self.remove_proxy()
                     else:
                         print('Invalid Proxy')
+                        time.sleep(5)
                 else:
                     print('Get IP Failed, Re Dialing')
                     time.sleep(ADSL_ERROR_CYCLE)
