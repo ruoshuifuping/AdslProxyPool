@@ -53,6 +53,7 @@ class Sender():
                     else:
                         self.proxy.append(proxy)
                         print("被反扒")
+                        time.sleep(2)
                         if len(self.proxy) > 30:
                             self.proxy.remove(self.proxy[0])
                         return False
