@@ -84,6 +84,7 @@ class Sender():
             print("没有反扒")
             return True
         else:
+            print(n)
             return False
 
     def adsl(self):
