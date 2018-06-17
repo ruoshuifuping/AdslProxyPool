@@ -40,7 +40,7 @@ class Sender():
                 print('start texting')
                 m = choice(self.headers)
                 headers = {'User-Agent':m}
-                html = rq.get('https://www.baidu.com/',headers=headers,timeout = 5)
+                html = rq.get(TEST_URL ,headers=headers,timeout = 5)
                 if html.status_code == 200:
                     self.proxy.append(proxy)
                     self.proxies = proxy + "\t" + m
