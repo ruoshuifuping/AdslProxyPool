@@ -8,7 +8,7 @@ class ProxyClient():
             (status, output) = subprocess.getstatusoutput('systemctl restart tinyproxy.service')
             if status ==0:
                 print("tinyproxy 重启成功")
-                time.sleep(3600)
+                time.sleep(2400)
             else:
                 print("tinyproxy 重启失败，再次重启")
                 
