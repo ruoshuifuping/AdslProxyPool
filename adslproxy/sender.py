@@ -22,7 +22,8 @@ class Sender():
         self.headers = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
             'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36'
+            'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'
         ]
         
     def get_ip(self, ifname=ADSL_IFNAME):
@@ -46,7 +47,8 @@ class Sender():
                     self.proxies = proxy + "\t" + m
                     if len(self.proxy) > 30:
                         self.proxy.remove(self.proxy[0])
-                    subprocess.getstatusoutput('systemctl restart  tinyproxy.service')
+                    if '66.0.3359' in m:
+                        subprocess.getstatusoutput('systemctl restart  tinyproxy.service')
                     return True
                 else:
                     self.proxy.append(proxy)
