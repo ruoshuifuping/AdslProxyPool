@@ -46,8 +46,8 @@ class Sender():
                     self.proxies = proxy + "\t" + m
                     if len(self.proxy) > 50:
                         self.proxy.remove(self.proxy[0])
-                    if '66.0.3359' in m:
-                        subprocess.getstatusoutput('systemctl restart  tinyproxy.service')
+                    #if '66.0.3359' in m:
+                        #subprocess.getstatusoutput('systemctl restart  tinyproxy.service')
                     return True
                 else:
                     self.proxy.append(proxy)
